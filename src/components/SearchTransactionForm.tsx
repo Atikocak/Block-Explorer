@@ -19,7 +19,7 @@ const SearchTransactionForm: React.FC<SearchTransactionFormProps> = ({
         value={address}
         onChange={(e) => setAddress(e.target.value)}
         className="w-3/4 border-2 border-r-0 border-gray-500 h-12 rounded-l-lg px-4 focus:outline-none focus:border-blue-600 disabled:bg-gray-500 transition-colors duration-150"
-        placeholder="JmOrUePpZh..."
+        placeholder="Please enter a wallet address"
         disabled={loading}
         required
       />

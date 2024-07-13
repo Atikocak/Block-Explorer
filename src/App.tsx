@@ -1,11 +1,13 @@
+import { useWallet } from "@solana/wallet-adapter-react";
 import { Connection, PublicKey } from "@solana/web3.js";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import Transaction from "../interfaces/Transaction";
 import "./App.css";
 import SearchTransactionForm from "./components/SearchTransactionForm";
 import TransactionList from "./components/TransactionList";
 import TransactionListDetail from "./components/TransactionListDetail";
+import Layout from "./layout/Layout";
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -13,21 +15,37 @@ function App() {
   const [balance, setBalance] = useState<number | null>(null);
   const [address, setAddress] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const { publicKey } = useWallet();
+
+  useEffect(() => {
+    if (!publicKey) {
+      setAddress("");
+      return;
+    } else {
+      setAddress(publicKey.toBase58());
+    }
+  }, [publicKey]);
 
   const handleFormSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     setLoading(true);
     setErrorMessage("");
+
     const apiKey = import.meta.env.VITE_ALCHEMY_API_KEY;
     const rpcEndpoint = `https://solana-mainnet.g.alchemy.com/v2/${apiKey}`;
 
     try {
-      const connection = new Connection(rpcEndpoint, "confirmed");
       const pubKey = new PublicKey(address);
 
+      if (!PublicKey.isOnCurve(pubKey.toBuffer())) {
+        throw new Error(
+          "You have entered an invalid address. Please enter a valid address!"
+        );
+      }
+      const connectionRPC = new Connection(rpcEndpoint, "confirmed");
       const [txSignatures, accountBalance] = await Promise.all([
-        connection.getSignaturesForAddress(pubKey, { limit: 10 }),
-        connection.getBalance(pubKey),
+        connectionRPC.getSignaturesForAddress(pubKey, { limit: 10 }),
+        connectionRPC.getBalance(pubKey),
       ]);
 
       const transactions: Transaction[] = txSignatures.map((tx) => ({
@@ -39,18 +57,22 @@ function App() {
 
       setTxList(transactions);
       setBalance(accountBalance / 1_000_000_000);
-    } catch (error) {
+    } catch (error: unknown) {
       console.error("Error fetching data:", error);
-      setErrorMessage("Unable to fetch transactions. Please try again later!");
+      if (error instanceof Error) {
+        setErrorMessage(`Error: ${error.message}`);
+      } else {
+        // error, Error türünde değilse, genel bir hata mesajı ayarlayın
+        setErrorMessage("An unknown error occurred");
+      }
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <>
+    <Layout>
       <div className="w-full h-full max-w-2xl p-6 flex flex-col items-center justify-between gap-6 mx-auto relative">
-        <h1 className="text-2xl">Solana Blockchain Explorer</h1>
         <Routes>
           <Route
             path="/"
@@ -85,7 +107,7 @@ function App() {
           </div>
         )}
       </div>
-    </>
+    </Layout>
   );
 }
 
