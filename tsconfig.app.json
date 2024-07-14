@@ -27,5 +27,12 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "components", "interfaces", "src/**/*.tsx", "src/**/*.ts"]
+  "include": [
+    "src",
+    "components",
+    "assets",
+    "interfaces",
+    "src/**/*.tsx",
+    "src/**/*.ts"
+  ]
 }
