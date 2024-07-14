@@ -1,5 +1,7 @@
 # Solana Blockchain Explorer
 
+![App Showcase](src/assets/app_showcase.gif)
+
 ## Overview
 
 This Solana Blockchain Explorer is a web application developed for the TalentOlympics challenge. It allows users to explore the Solana blockchain by searching for wallet addresses or transaction IDs, providing detailed information about transactions and account balances.
