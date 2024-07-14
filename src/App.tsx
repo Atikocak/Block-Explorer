@@ -1,7 +1,7 @@
 import { useWallet } from "@solana/wallet-adapter-react";
 import { Connection, PublicKey } from "@solana/web3.js";
 import { useEffect, useState } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import Transaction from "../interfaces/Transaction";
 import "./App.css";
 import SearchTransactionForm from "./components/SearchTransactionForm";
@@ -15,7 +15,9 @@ function App() {
   const [balance, setBalance] = useState<number | null>(null);
   const [address, setAddress] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [touched, setTouched] = useState(false);
   const { publicKey } = useWallet();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!publicKey) {
@@ -35,28 +37,31 @@ function App() {
     const rpcEndpoint = `https://solana-mainnet.g.alchemy.com/v2/${apiKey}`;
 
     try {
-      const pubKey = new PublicKey(address);
+      if (address.length === 88 || address.length === 87) {
+        navigate(`/tx/${address}`);
+      } else {
+        const pubKey = new PublicKey(address);
+        if (!PublicKey.isOnCurve(pubKey.toBuffer())) {
+          throw new Error(
+            "You have entered an invalid address. Please enter a valid address!"
+          );
+        }
+        const connectionRPC = new Connection(rpcEndpoint, "confirmed");
+        const [txSignatures, accountBalance] = await Promise.all([
+          connectionRPC.getSignaturesForAddress(pubKey, { limit: 10 }),
+          connectionRPC.getBalance(pubKey),
+        ]);
 
-      if (!PublicKey.isOnCurve(pubKey.toBuffer())) {
-        throw new Error(
-          "You have entered an invalid address. Please enter a valid address!"
-        );
+        const transactions: Transaction[] = txSignatures.map((tx) => ({
+          signature: tx.signature,
+          slot: tx.slot,
+          blockTime: tx.blockTime || 0,
+          confirmationStatus: tx.confirmationStatus,
+        }));
+
+        setTxList(transactions);
+        setBalance(accountBalance / 1_000_000_000);
       }
-      const connectionRPC = new Connection(rpcEndpoint, "confirmed");
-      const [txSignatures, accountBalance] = await Promise.all([
-        connectionRPC.getSignaturesForAddress(pubKey, { limit: 10 }),
-        connectionRPC.getBalance(pubKey),
-      ]);
-
-      const transactions: Transaction[] = txSignatures.map((tx) => ({
-        signature: tx.signature,
-        slot: tx.slot,
-        blockTime: tx.blockTime || 0,
-        confirmationStatus: tx.confirmationStatus,
-      }));
-
-      setTxList(transactions);
-      setBalance(accountBalance / 1_000_000_000);
     } catch (error: unknown) {
       console.error("Error fetching data:", error);
       if (error instanceof Error) {
@@ -67,12 +72,13 @@ function App() {
       }
     } finally {
       setLoading(false);
+      setTouched(true);
     }
   };
 
   return (
     <Layout>
-      <div className="w-full h-full max-w-2xl p-6 flex flex-col items-center justify-between gap-6 mx-auto relative">
+      <div className="w-full h-full mx-auto max-w-2xl p-6 flex flex-col items-center justify-between">
         <Routes>
           <Route
             path="/"
@@ -84,8 +90,13 @@ function App() {
                   setAddress={setAddress}
                   loading={loading}
                   errorMessage={errorMessage}
+                  touched={touched}
                 />
-                <TransactionList txList={txList} balance={balance} />
+                <TransactionList
+                  txList={txList}
+                  balance={balance}
+                  touched={touched}
+                />
               </>
             }
           ></Route>

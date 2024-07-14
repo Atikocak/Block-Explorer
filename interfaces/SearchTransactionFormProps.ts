@@ -4,6 +4,7 @@ interface SearchTransactionFormProps {
   setAddress: (address: string) => void;
   loading: boolean;
   errorMessage: string;
+  touched: boolean;
 }
 
 export default SearchTransactionFormProps;

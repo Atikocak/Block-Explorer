@@ -1,6 +1,16 @@
-/* .wallet-adapter-button,
 .wallet-adapter-button-trigger {
-  width: 8rem !important;
-  height: 4rem !important;
-  font-size: 1rem !important;
-} */
+  font-family: inter !important;
+  font-size: small !important;
+  background-color: #1b1a55 !important;
+  font-weight: 300 !important;
+  letter-spacing: 0.5px !important;
+  height: 36px !important;
+  transition-property: all !important;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
+  transition-duration: 150ms !important;
+  border-radius: 8px !important;
+}
+
+.wallet-adapter-button:hover {
+  background-color: #27374d !important;
+}

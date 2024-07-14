@@ -1,7 +1,7 @@
 import { Connection, VersionedTransactionResponse } from "@solana/web3.js";
 import { format, fromUnixTime } from "date-fns";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import TransactionListDetailProps from "../../interfaces/TransactionListDetailProps.ts";
 
 const TransactionListDetail: React.FC<TransactionListDetailProps> = ({
@@ -9,10 +9,12 @@ const TransactionListDetail: React.FC<TransactionListDetailProps> = ({
   setLoading,
   errorMessage,
   setErrorMessage,
+  signatureProp,
 }) => {
   const [transactionData, setTransactionData] =
     useState<VersionedTransactionResponse | null>(null);
-  const { signature } = useParams<{ signature: string }>();
+  const { signature: signatureFromUrl } = useParams<{ signature: string }>();
+  const signature = signatureProp || signatureFromUrl;
 
   useEffect(() => {
     const fetchTransactionData = async () => {
@@ -49,7 +51,7 @@ const TransactionListDetail: React.FC<TransactionListDetailProps> = ({
   }, [signature, setLoading, setErrorMessage]);
 
   return (
-    <div className="w-full">
+    <div className="w-full h-full flex flex-col">
       {!loading && transactionData && (
         <div className="rounded-lg border max-w-xl overflow-x-auto mx-auto">
           <table className="table-auto w-full border-collapse p-4">
@@ -105,6 +107,11 @@ const TransactionListDetail: React.FC<TransactionListDetailProps> = ({
           {errorMessage || "No transaction found"}
         </p>
       )}
+      <Link to={"/"} className="mt-4 self-center">
+        <button className="flex-grow bg-[#1B1A55] flex items-center justify-center rounded-md w-24 h-12 text-white text-sm hover:bg-[#535C91] disabled:bg-gray-500 transition-colors duration-150">
+          Home
+        </button>
+      </Link>
     </div>
   );
 };
