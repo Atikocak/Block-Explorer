@@ -1,6 +1,8 @@
 # Solana Blockchain Explorer
 
-![App Showcase](src/assets/app_showcase.gif)
+[![TalentOlympics](src/assets/talent_olympics_page.png)](https://earn.superteam.fun/talent-olympics/)
+
+[![Challenge Card](src/assets/challenge_card.png)](https://x.com/atilimkocak)
 
 ## Overview
 
@@ -83,6 +85,8 @@ The built files will be in the `dist` directory.
 This application can be deployed on platforms like Vercel or Cloudflare Pages. Follow the platform-specific instructions for deploying a Vite React application.
 
 ## Usage
+
+![App Showcase](src/assets/app_showcase.gif)
 
 1. On the home page, enter a Solana wallet address or transaction ID in the search bar.
 2. For wallet addresses:
