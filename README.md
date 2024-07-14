@@ -1,5 +1,7 @@
 # Solana Blockchain Explorer
 
+**Live Demo:** [Click to view live version](https://block-explorer-mu.vercel.app/)
+
 [![TalentOlympics](src/assets/talent_olympics_page.png)](https://earn.superteam.fun/talent-olympics/)
 
 [![Challenge Card](src/assets/challenge_card.png)](https://x.com/atilimkocak)
