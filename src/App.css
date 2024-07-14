@@ -16,11 +16,11 @@
   background-color: #27374d !important;
 }
 
-@media screen (min-width: 768px) {
+@media (max-width: 768px) {
   .wallet-adapter-button-trigger {
     font-family: inter !important;
     line-height: 1rem !important;
-    font-size: 0.5rem !important;
+    font-size: 0.75rem !important;
     background-color: #1b1a55 !important;
     font-weight: 300 !important;
     letter-spacing: 0.5px !important;
