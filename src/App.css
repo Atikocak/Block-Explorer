@@ -1,5 +1,6 @@
 .wallet-adapter-button-trigger {
   font-family: inter !important;
+  text-wrap: nowrap !important;
   font-size: small !important;
   background-color: #1b1a55 !important;
   font-weight: 300 !important;
@@ -13,4 +14,20 @@
 
 .wallet-adapter-button:hover {
   background-color: #27374d !important;
+}
+
+@media screen (min-width: 768px) {
+  .wallet-adapter-button-trigger {
+    font-family: inter !important;
+    line-height: 1rem !important;
+    font-size: 0.5rem !important;
+    background-color: #1b1a55 !important;
+    font-weight: 300 !important;
+    letter-spacing: 0.5px !important;
+    height: 32px !important;
+    transition-property: all !important;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
+    transition-duration: 150ms !important;
+    border-radius: 8px !important;
+  }
 }

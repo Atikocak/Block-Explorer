@@ -41,7 +41,7 @@ const SearchTransactionForm: React.FC<SearchTransactionFormProps> = ({
           name="address"
           value={address}
           onChange={(e) => setAddress(e.target.value)}
-          className="block w-full transition-all duration-300 p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-[#526D82] focus:ring-blue-500 focus:border-blue-500"
+          className="block w-full transition-all duration-300 p-4 ps-10 md:text-sm text-xs text-gray-900 border border-gray-300 rounded-lg bg-[#526D82] focus:ring-blue-500 focus:border-blue-500"
           placeholder="Please enter a wallet address or a tx id"
           disabled={loading}
           required
@@ -49,7 +49,7 @@ const SearchTransactionForm: React.FC<SearchTransactionFormProps> = ({
         <button
           type="submit"
           disabled={loading}
-          className="text-white absolute end-2.5 bottom-2.5 bg-[#1b1a55] hover:bg-[#27374D] transition-all duration-300 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          className="text-white absolute end-2.5 bottom-2.5 bg-[#1b1a55] hover:bg-[#27374D] transition-all duration-300 focus:ring-4 focus:outline-none focus:ring-blue-300 font-light md:font-medium rounded-lg md:text-sm text-xs px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
         >
           Search
         </button>
