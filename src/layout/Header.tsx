@@ -5,7 +5,7 @@ export default function Header() {
     <div className="flex h-16 p-2 align-middle items-center text-white bg-[#526D82] justify-between shadow-inner drop-shadow-md shadow-[#27374d]">
       <a href="/">
         <img
-          src="../src/assets/sol-banner.svg"
+          src="../assets/sol-banner.svg"
           alt="solana-logo"
           className="w-36 mr-4"
         />
