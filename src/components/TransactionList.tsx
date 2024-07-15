@@ -16,15 +16,15 @@ const TransactionList: React.FC<TransactionListProps> = ({
   touched,
 }) => {
   return (
-    <div className="first-line:overflow-hidden transition-all duration-300 max-h-fit w-[90vw] h-full">
+    <div className="first-line:overflow-hidden overflow-y-auto md:overflow-y-hidden transition-all duration-300 max-h-fit w-[90vw] h-full">
       {balance && (
-        <h2 className="flex justify-between border-2 py-4 hover:bg-slate-500 mt-6 px-2 text-lg mb-4">
+        <h2 className="flex justify-between border-2 py-4 hover:bg-slate-500 mt-6 px-2 text-xs md:text-lg mb-4">
           Balance: <span>◎{balance}</span>
         </h2>
       )}
       {txList?.length > 0 && (
         <div className="overflow-x-auto">
-          <Table className="w-full border-spacing-x-2 border-2 border-separate">
+          <Table className="w-full border-spacing-x-2 border-2 border-separate text-xs md:text-sm">
             <TableHeader>
               <TableRow>
                 <TableHead className="text-center">Signature</TableHead>
@@ -36,7 +36,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
             <TableBody>
               {txList.map((transaction) => (
                 <TableRow key={transaction?.signature}>
-                  <TableCell className="truncate max-w-[190px] hover:underline text-left">
+                  <TableCell className="truncate max-w-[40px] md:max-w-[190px] hover:underline text-left">
                     <Link to={`/tx/${transaction?.signature}`}>
                       {transaction?.signature}
                     </Link>
