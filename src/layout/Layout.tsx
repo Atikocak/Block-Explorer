@@ -5,7 +5,7 @@ import Header from "./Header";
 
 const Layout: FC<{ children: ReactNode }> = ({ children }) => {
   return (
-    <div className="font-inter bg-[#070F2B] text-gray-100 flex flex-col h-screen w-screen">
+    <div className="font-inter bg-[#070F2B] text-gray-100 flex flex-col h-screen w-screen overflow-hidden">
       <Header />
       <>{children}</>
       <Footer />

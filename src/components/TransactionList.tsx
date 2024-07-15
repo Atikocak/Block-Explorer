@@ -16,28 +16,31 @@ const TransactionList: React.FC<TransactionListProps> = ({
   touched,
 }) => {
   return (
-    <div className="first-line:overflow-hidden overflow-y-auto md:overflow-y-hidden transition-all duration-300 max-h-fit w-[90vw] h-full">
+    <div className="overflow-hidden overflow-y-auto md:overflow-y-hidden transition-all duration-300 max-h-[calc(100vh-200px)] md:max-h-fit w-full h-full no-scrollbar">
       {balance && (
-        <h2 className="flex justify-between border-2 py-4 hover:bg-slate-500 mt-6 px-2 text-xs md:text-lg mb-4">
+        <h2 className="flex justify-between border-2 py-4 hover:bg-slate-500 mt-6 px-2 text-xs md:text-lg mb-4 w-full">
           Balance: <span>◎{balance}</span>
         </h2>
       )}
       {txList?.length > 0 && (
-        <div className="overflow-x-auto">
-          <Table className="w-full border-spacing-x-2 border-2 border-separate text-xs md:text-sm">
+        <div className="overflow-x-auto w-full">
+          <Table className="w-full border-spacing-x-2 border-2 border-separate text-xs md:text-sm table-fixed">
             <TableHeader>
               <TableRow>
-                <TableHead className="text-center">Signature</TableHead>
-                <TableHead className="text-center">Block</TableHead>
-                <TableHead className="text-center">Age</TableHead>
-                <TableHead className="text-center">Status</TableHead>
+                <TableHead className="text-center w-1/4">Signature</TableHead>
+                <TableHead className="text-center w-1/4">Block</TableHead>
+                <TableHead className="text-center w-1/4">Age</TableHead>
+                <TableHead className="text-center w-1/4">Status</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {txList.map((transaction) => (
                 <TableRow key={transaction?.signature}>
                   <TableCell className="truncate max-w-[40px] md:max-w-[190px] hover:underline text-left">
-                    <Link to={`/tx/${transaction?.signature}`}>
+                    <Link
+                      to={`/tx/${transaction?.signature}`}
+                      className="block truncate"
+                    >
                       {transaction?.signature}
                     </Link>
                   </TableCell>

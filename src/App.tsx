@@ -78,7 +78,7 @@ function App() {
 
   return (
     <Layout>
-      <div className="w-full h-full mx-auto max-w-2xl p-6 flex flex-col items-center justify-between">
+      <div className="w-full h-full mx-auto max-w-2xl p-6 flex flex-col items-center justify-between overflow-hidden">
         <Routes>
           <Route
             path="/"
